@@ -1,4 +1,4 @@
-# AI Financial Analyst Swarm
+# Stock Price Anomalay Detection with AI Agents
 
 This project deploys a swarm of AI agents to perform real-time stock analysis and forecasting. Users can interact with the agents through a Streamlit-based chat interface to get insights on stock performance, trends, and predictions.
 
