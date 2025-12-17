@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Architecture Flowchart</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .chart-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 90%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chart-container">
+    <pre class="mermaid">
+    graph TD
+        %% Nodes
+        User([User Input]) --> UI[Streamlit Interface]
+        UI --> Crew[CrewAI Orchestrator]
+        
+        subgraph "The Reasoning Layer (LLMs)"
+            Crew --> Retriever[Retriever Agent]
+            Analyst[Analyst Agent] --> Report[Final Natural Language Report]
+        end
+        
+        subgraph "The Execution Layer (Python Tools)"
+            Retriever -- "Calls Analysis Tool" --> Tool[Python Tool Engine]
+            
+            Tool --> API[Polygon.io API]
+            API -- "Returns Historical Data" --> Tool
+            
+            Tool --> Math[Quant Models]
+            Math -- "ARIMA (Trend)" --> Stats[Statistical Output]
+            Math -- "GARCH (Volatility)" --> Stats
+        end
+        
+        %% Connections back up
+        Stats -- "JSON Data" --> Analyst
+        Report --> UI
+        UI --> UserOutput([Displayed to User])
+
+        %% Styling
+        style User fill:#ff99ff,stroke:#333,stroke-width:2px,color:black
+        style Tool fill:#99ccff,stroke:#333,stroke-width:2px,color:black
+        style Math fill:#99ccff,stroke:#333,stroke-width:2px,color:black
+        style Retriever fill:#99ffcc,stroke:#333,stroke-width:2px,color:black
+        style Analyst fill:#99ffcc,stroke:#333,stroke-width:2px,color:black
+        style UI fill:#ececec,stroke:#333,stroke-width:2px,color:black
+        style Crew fill:#ececec,stroke:#333,stroke-width:2px,color:black
+        style Report fill:#ffffff,stroke:#333,stroke-width:1px,stroke-dasharray: 5 5,color:black
+        style API fill:#ffffcc,stroke:#333,stroke-width:2px,color:black
+        style Stats fill:#ffffcc,stroke:#333,stroke-width:2px,color:black
+        style UserOutput fill:#ff99ff,stroke:#333,stroke-width:2px,color:black
+    </pre>
+</div>
+
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, theme: 'default' });
+</script>
+
+</body>
+</html>
